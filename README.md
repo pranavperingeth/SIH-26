@@ -12,23 +12,21 @@
 <br/>
 
 [![Python](https://img.shields.io/badge/Python-3.12+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
-[![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://reactjs.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 [![Neo4j](https://img.shields.io/badge/Neo4j-Graph_DB-008CC1?style=for-the-badge&logo=neo4j&logoColor=white)](https://neo4j.com)
 [![Ethereum](https://img.shields.io/badge/Ethereum-EVM-3C3C3D?style=for-the-badge&logo=ethereum&logoColor=white)](https://ethereum.org)
+[![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://reactjs.org)
 
 <br/>
 
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://typescriptlang.org)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://postgresql.org)
 [![Redis](https://img.shields.io/badge/Redis-7-DC382D?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io)
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://docker.com)
-[![PyTorch](https://img.shields.io/badge/PyTorch-GNN-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)](https://pytorch.org)
+[![XGBoost](https://img.shields.io/badge/XGBoost-ML-189BCC?style=for-the-badge)](https://xgboost.readthedocs.io)
+[![SHAP](https://img.shields.io/badge/SHAP-Explainable_AI-FF6B6B?style=for-the-badge)](https://shap.readthedocs.io)
 
 <br/>
 
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
-![Status](https://img.shields.io/badge/Status-Active_Development-yellow?style=flat-square)
 ![Blockchain](https://img.shields.io/badge/Blockchain-Ethereum%20%7C%20EVM-blueviolet?style=flat-square)
 ![Theme](https://img.shields.io/badge/Theme-Blockchain_%26_Cybersecurity-orange?style=flat-square)
 
@@ -40,19 +38,22 @@
 
 - [Problem Statement](#-problem-statement)
 - [Our Solution](#-our-solution)
-- [Team Blockies](#-team-blockies)
+- [How It Works](#-how-it-works)
+- [Key Features](#-key-features)
 - [Tech Stack](#-tech-stack)
 - [System Architecture](#-system-architecture)
+- [Graph Analysis](#-graph-analysis)
 - [Fraud Detection Engine](#-fraud-detection-engine)
 - [Risk Scoring System](#-risk-scoring-system)
-- [API Reference](#-api-reference)
+- [Explainable AI](#-explainable-ai)
 - [Real-Time Pipeline](#-real-time-pipeline)
+- [API Reference](#-api-reference)
 - [Database Design](#-database-design)
 - [Security](#-security)
-- [Development Roadmap](#-development-roadmap)
 - [Getting Started](#-getting-started)
 - [Docker Deployment](#-docker-deployment)
-- [Contributing](#-contributing)
+- [Future Scope](#-future-scope)
+- [Team Blockies](#-team-blockies)
 
 ---
 
@@ -72,56 +73,90 @@
 | 🌑 Darknet Transactions | Illegal goods/services on dark markets |
 | 🏛️ Organized Cybercrime | Structured financial criminal networks |
 
-**The Challenge:** During investigations, reported wallets are often intermediary hops in a complex money-laundering chain, making it extremely difficult to identify the final exchange where funds are cashed out — and serve a legal freeze request.
+**The Challenge:** During investigations, reported wallets are often the first hop in a complex money-laundering chain. Fraudsters move stolen crypto through dozens of intermediate wallets — using mixers, peel chains, and chain-hopping — before cashing out at a cryptocurrency exchange. Manually tracing this trail takes weeks. By then, the funds are gone.
 
 ---
 
 ## 💡 Our Solution
 
-**ChainTrace** is a real-time blockchain analytics platform that:
+**ChainTrace** is an AI-powered blockchain investigation platform that automates the entire trace-to-freeze pipeline — from a victim-reported wallet address to identifying the final exchange where stolen funds are cashed out.
 
-1. 🔍 **Ingests** suspect wallet addresses reported by victims
-2. 🕸️ **Traces** fund flows through N-hop graph traversal
-3. 🧠 **Detects** fraud patterns using ML + rule-based engines
-4. 🏦 **Identifies** the final cryptocurrency exchange receiving funds
-5. 📊 **Scores** risk from 0–100 with Explainable AI (SHAP)
-6. ⚡ **Alerts** investigators in real-time via WebSocket dashboard
-7. 📄 **Generates** law-enforcement-ready reports automatically
+```
+Victim reports wallet  →  ChainTrace traces the money  →  Police freezes the exchange account
+```
+
+### What sets ChainTrace apart:
+
+| Capability | Description |
+|---|---|
+| 🕸️ **Automated Fund Tracing** | BFS graph traversal traces money through up to 6 hops automatically |
+| 🧠 **AI-Powered Detection** | XGBoost model trained on 203K labeled transactions detects laundering patterns |
+| 📐 **Rule Engine** | Catches peel chains, fan-in/fan-out, velocity anomalies, and mixer interactions |
+| 🏦 **Exchange Identification** | Automatically identifies the destination exchange (Binance, WazirX, etc.) |
+| 💯 **Risk Scoring (0–100)** | Unified score combining ML + Rules + Graph position |
+| 🔍 **Explainable AI** | SHAP-powered explanations for every risk score — court-admissible reasoning |
+| ⚡ **Real-Time Monitoring** | WebSocket alerts when watched wallets move funds |
+| 📄 **Auto-Generated Reports** | Law-enforcement-ready PDF reports for freeze requests |
 
 ---
 
-## 🧱 Team Blockies
+## ⚙️ How It Works
 
-<div align="center">
+```
+┌──────────────────────────────────────────────────────────────────┐
+│                                                                  │
+│   1. INGEST         2. TRACE          3. ANALYZE      4. ACT    │
+│                                                                  │
+│   Victim reports    BFS algorithm     ML + Rules      Identify  │
+│   suspect wallet →  follows the   →   score every  →  exchange  │
+│   address           money through     wallet in       & generate│
+│                     Neo4j graph       the path        PDF report│
+│                     (up to 6 hops)                              │
+│                                                                  │
+└──────────────────────────────────────────────────────────────────┘
+```
 
-| Member | Role |
-|--------|------|
-| [Add member] | Team Lead / Blockchain Engineer |
-| [Add member] | ML / Data Science |
-| [Add member] | Backend Engineer |
-| [Add member] | Frontend / UI |
-| [Add member] | DevOps / Security |
-| [Add member] | Research / Analytics |
+**Step-by-step:**
 
-**Team Name:** `Blockies` &nbsp;|&nbsp; **SIH 2026**
+1. **Input** — An investigator submits a suspect wallet address via the dashboard or API
+2. **Ingestion** — ChainTrace fetches the wallet's complete transaction history from the Ethereum blockchain (via Etherscan/Alchemy APIs), including all ETH and ERC-20 token transfers
+3. **Graph Construction** — All transactions are loaded into a Neo4j graph database as wallet nodes connected by transaction edges
+4. **Fund Tracing** — A Breadth-First Search (BFS) algorithm traces the money forward, hopping from wallet to wallet, pruning dust transactions and innocent bystanders
+5. **Fraud Detection** — Each wallet in the traced path is analyzed by a 4-layer detection engine (Rules → Behavioral Features → ML Model → Graph Algorithms)
+6. **Risk Scoring** — A unified score (0–100) is computed combining ML confidence, rule triggers, and graph position
+7. **Exchange Detection** — When the traced path hits a wallet belonging to a known exchange (from our intelligence database), the trace stops and the exchange is identified
+8. **Alert & Report** — A real-time WebSocket alert is pushed to the investigator's dashboard, and a PDF report is auto-generated for law enforcement action
 
-</div>
+---
+
+## ✨ Key Features
+
+### 🕸️ Interactive Graph Visualization
+Visualize the complete fund-flow network from victim to exchange using Cytoscape.js. Click any node to see risk scores, transaction history, and SHAP explanations.
+
+### 📊 Investigator Dashboard
+A purpose-built React dashboard for law enforcement officers — submit wallets, track investigations, receive live alerts, and export reports.
+
+### 🔴 Live Alert System
+Real-time WebSocket notifications when:
+- A watched wallet moves funds
+- A high-risk pattern is detected
+- An exchange is identified as the fund destination
+
+### 📄 Law Enforcement Reports
+Auto-generated PDF reports containing:
+- Full traced path with transaction hashes
+- Risk scores and explanations for every hop
+- Final exchange identified
+- Recommended action (freeze request template)
+- All evidence formatted for legal proceedings
+
+### 🏦 Address Intelligence Database
+Built-in database of 10,000+ labeled addresses — exchanges, mixers, scam wallets, sanctioned entities — sourced from Etherscan, CryptoScamDB, and OFAC sanctions lists.
 
 ---
 
 ## 🛠️ Tech Stack
-
-### 🎨 Frontend
-
-| Technology | Purpose | Badge |
-|---|---|---|
-| React 18 | Investigator Dashboard UI | ![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black) |
-| TypeScript 5 | Type-safe frontend development | ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) |
-| Vite | Build tooling & HMR | ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white) |
-| Tailwind CSS | Utility-first UI styling | ![Tailwind](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white) |
-| Cytoscape.js | Interactive graph visualization | ![Cytoscape](https://img.shields.io/badge/Cytoscape.js-F7A800?style=flat-square) |
-| Recharts | Analytics charts | ![Recharts](https://img.shields.io/badge/Recharts-22B5BF?style=flat-square) |
-| Axios | REST API communication | ![Axios](https://img.shields.io/badge/Axios-5A29E4?style=flat-square&logo=axios&logoColor=white) |
 
 ### ⚙️ Backend
 
@@ -131,35 +166,26 @@
 | FastAPI | REST API & WebSocket server | ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white) |
 | Pydantic v2 | Request/response validation | ![Pydantic](https://img.shields.io/badge/Pydantic-E92063?style=flat-square&logo=pydantic&logoColor=white) |
 | SQLAlchemy | Database ORM | ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-D71F00?style=flat-square) |
-| Uvicorn | ASGI server | ![Uvicorn](https://img.shields.io/badge/Uvicorn-499848?style=flat-square) |
 | Celery | Background task processing | ![Celery](https://img.shields.io/badge/Celery-37814A?style=flat-square&logo=celery&logoColor=white) |
-| Redis | Cache, queue & pub/sub | ![Redis](https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white) |
+| Redis | Cache, queue & real-time pub/sub | ![Redis](https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white) |
 
-### ⛓️ Blockchain Integration
+### ⛓️ Blockchain
 
-**Initial Network Support:**
+**Supported Networks:**
 
 ![Ethereum](https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=ethereum&logoColor=white)
 ![BNB Chain](https://img.shields.io/badge/BNB_Smart_Chain-F0B90B?style=for-the-badge&logo=binance&logoColor=black)
 ![Polygon](https://img.shields.io/badge/Polygon-8247E5?style=for-the-badge&logo=polygon&logoColor=white)
 
-**Future Support:**
-
-![Bitcoin](https://img.shields.io/badge/Bitcoin-F7931A?style=flat-square&logo=bitcoin&logoColor=white)
-![Tron](https://img.shields.io/badge/Tron-FF0013?style=flat-square&logo=tron&logoColor=white)
-![Solana](https://img.shields.io/badge/Solana-9945FF?style=flat-square&logo=solana&logoColor=white)
-
 **Data Providers:**
 
 [![Alchemy](https://img.shields.io/badge/Alchemy-363FF9?style=flat-square&logo=alchemy&logoColor=white)](https://alchemy.com)
-[![Infura](https://img.shields.io/badge/Infura-FF6B2B?style=flat-square)](https://infura.io)
 [![Etherscan](https://img.shields.io/badge/Etherscan_API-21325B?style=flat-square)](https://etherscan.io/apis)
-[![QuickNode](https://img.shields.io/badge/QuickNode-4590F7?style=flat-square)](https://quicknode.com)
+[![Infura](https://img.shields.io/badge/Infura-FF6B2B?style=flat-square)](https://infura.io)
 
 | Library | Purpose |
 |---|---|
 | `web3.py` | EVM blockchain interaction |
-| `ethers.js` | Frontend blockchain interaction |
 | `ABI decoding` | Smart contract event parsing |
 | `JSON-RPC` | Direct node communication |
 
@@ -167,21 +193,37 @@
 
 | Database | Purpose | Badge |
 |---|---|---|
-| PostgreSQL 16 | Primary relational store (users, cases, alerts) | ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white) |
-| Neo4j | Graph DB for wallet relationships & fund flow | ![Neo4j](https://img.shields.io/badge/Neo4j-008CC1?style=flat-square&logo=neo4j&logoColor=white) |
-| Redis 7 | Caching, task queues, real-time pub/sub | ![Redis](https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white) |
+| SQLite / PostgreSQL | Relational store — investigations, users, alerts, risk scores | ![SQLite](https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white) |
+| Neo4j 5 | Graph DB — wallet relationships, fund-flow tracing, BFS | ![Neo4j](https://img.shields.io/badge/Neo4j-008CC1?style=flat-square&logo=neo4j&logoColor=white) |
+| Redis 7 | Caching, task queues, WebSocket pub/sub | ![Redis](https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white) |
 
-### 🧪 ML & Data Science
+### 🧪 ML & AI
 
 | Library | Purpose | Badge |
 |---|---|---|
-| PyTorch | Deep learning & GNN | ![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=flat-square&logo=pytorch&logoColor=white) |
-| PyTorch Geometric | Graph neural networks | ![PyG](https://img.shields.io/badge/PyG-3C2179?style=flat-square&logo=pytorch&logoColor=white) |
-| scikit-learn | Classical ML models | ![sklearn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white) |
-| XGBoost | Gradient boosted trees | ![XGBoost](https://img.shields.io/badge/XGBoost-189BCC?style=flat-square) |
-| SHAP | Explainable AI | ![SHAP](https://img.shields.io/badge/SHAP-FF6B6B?style=flat-square) |
-| NetworkX | Graph algorithms & analysis | ![NetworkX](https://img.shields.io/badge/NetworkX-orange?style=flat-square) |
-| Pandas / NumPy | Data processing | ![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat-square&logo=pandas&logoColor=white) |
+| XGBoost | Primary fraud classifier | ![XGBoost](https://img.shields.io/badge/XGBoost-189BCC?style=flat-square) |
+| scikit-learn | ML toolkit (Random Forest, Isolation Forest) | ![sklearn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white) |
+| SHAP | Explainable AI — human-readable risk explanations | ![SHAP](https://img.shields.io/badge/SHAP-FF6B6B?style=flat-square) |
+| Pandas / NumPy | Data processing & feature extraction | ![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat-square&logo=pandas&logoColor=white) |
+
+**Training Data:** [Elliptic Bitcoin Dataset](https://www.kaggle.com/datasets/ellipticco/elliptic-data-set) — 203,769 labeled transactions (licit / illicit / unknown)
+
+### 🎨 Frontend
+
+| Technology | Purpose | Badge |
+|---|---|---|
+| React 18 | Investigator Dashboard | ![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black) |
+| TypeScript | Type-safe development | ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) |
+| Cytoscape.js | Interactive graph visualization | ![Cytoscape](https://img.shields.io/badge/Cytoscape.js-F7A800?style=flat-square) |
+| Tailwind CSS | UI styling | ![Tailwind](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white) |
+| Recharts | Analytics charts | ![Recharts](https://img.shields.io/badge/Recharts-22B5BF?style=flat-square) |
+
+### 🐳 DevOps
+
+| Technology | Purpose | Badge |
+|---|---|---|
+| Docker Compose | Multi-service orchestration | ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white) |
+| GitHub Actions | CI/CD pipeline | ![Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white) |
 
 ---
 
@@ -194,12 +236,12 @@
                          └──────────┬──────────┘
                                     │
                               RPC / APIs
-                            (Alchemy/Infura)
+                            (Alchemy/Etherscan)
                                     │
                                     ▼
                     ┌───────────────────────────┐
                     │   BLOCKCHAIN INGESTION    │
-                    │    Web3.py / JSON-RPC     │
+                    │   Web3.py / Etherscan API │
                     └─────────────┬─────────────┘
                                   │
                                   ▼
@@ -211,7 +253,7 @@
                  ┌────────────────┼────────────────┐
                  ▼                ▼                ▼
           ┌────────────┐   ┌────────────┐   ┌────────────┐
-          │ PostgreSQL │   │   Neo4j    │   │   Redis    │
+          │   SQLite   │   │   Neo4j    │   │   Redis    │
           │  (Cases,   │   │  (Graph,   │   │  (Cache,   │
           │   Alerts)  │   │ Fund Flow) │   │  Queues)   │
           └──────┬─────┘   └──────┬─────┘   └──────┬─────┘
@@ -224,14 +266,14 @@
                     │   Behavioral Features     │
                     └─────────────┬─────────────┘
                                   │
-                ┌─────────────────┼──────────────────┐
-                ▼                 ▼                  ▼
-        ┌─────────────┐   ┌─────────────┐   ┌─────────────┐
-        │ Rule Engine │   │  ML Models  │   │ GNN Models  │
-        │ (Heuristic) │   │ XGBoost/RF  │   │  GCN / GAT  │
-        └──────┬──────┘   └──────┬──────┘   └──────┬──────┘
-               │                 │                  │
-               └─────────────────┼──────────────────┘
+                    ┌─────────────┼─────────────┐
+                    ▼                           ▼
+            ┌─────────────┐             ┌─────────────┐
+            │ Rule Engine │             │  ML Models  │
+            │ (Heuristic) │             │ XGBoost/IF  │
+            └──────┬──────┘             └──────┬──────┘
+                   │                           │
+                   └─────────────┬─────────────┘
                                  ▼
                      ┌────────────────────────┐
                      │    RISK SCORE ENGINE   │
@@ -242,7 +284,7 @@
                      ▼                        ▼
               ┌─────────────┐          ┌─────────────┐
               │ Alert Engine│          │  SHAP / XAI │
-              │  (I4C LEA)  │          │ Explanations│
+              │  + Reports  │          │ Explanations│
               └──────┬──────┘          └──────┬──────┘
                      │                        │
                      └───────────┬────────────┘
@@ -265,69 +307,40 @@
                        └──────────────────┘
 ```
 
-### 📦 Data Ingestion Pipeline
-
-```
-Blockchain
-    ↓
-RPC / Blockchain API
-    ↓
-Data Ingestion Service
-    ↓
-Transaction Normalization
-    ↓
-Transaction Database
-    ↓
-Graph Construction
-    ↓
-Fraud Detection Engine
-```
-
-**Fields captured per transaction:**
-
-| Field | Description |
-|---|---|
-| `wallet_address` | Sender / receiver address |
-| `transaction_hash` | Unique tx identifier |
-| `from_address` | Originating wallet |
-| `to_address` | Destination wallet |
-| `amount` | Value transferred |
-| `token` | ETH / ERC-20 token |
-| `block_number` | Chain block height |
-| `timestamp` | Block timestamp |
-| `gas_info` | Gas used, gas price |
-| `contract_interactions` | Smart contract calls |
-| `erc20_transfers` | Token transfer events |
-| `tx_status` | Success / Reverted |
-
 ---
 
 ## 🕸️ Graph Analysis
 
-### Fund Flow Graph Model
+### Fund Flow Tracing
+
+ChainTrace builds a directed graph of all wallet-to-wallet transactions and traces the money forward using BFS:
 
 ```
 (Victim)
     │
-    │ transfer
+    │ 2.0 ETH
     ▼
 (Scam Wallet)          ← Reported by victim
     │
+    │ 1.95 ETH
     ▼
-(Intermediate Wallet)  ← Hop 1
+(Intermediate Wallet)  ← Hop 1 — flagged by velocity rule
     │
+    │ 1.90 ETH
     ▼
-(Aggregator)           ← Hop 2  — Clustering heuristic
+(Aggregator)           ← Hop 2 — flagged by fan-in pattern
     │
+    │ 1.85 ETH
     ▼
-(Exchange Hot Wallet)  ← TARGET — Freeze request sent here
+(Exchange Hot Wallet)  ← TARGET IDENTIFIED: Binance
+                          Freeze request issued ✓
 ```
 
-### Graph Schema (Neo4j / Cypher)
+### Graph Schema (Neo4j)
 
 ```cypher
 // Nodes
-(:Wallet {address, label, risk_score, entity_type})
+(:Wallet {address, label, risk_score, entity_type, first_seen, last_seen})
 (:Exchange {name, address, kyc_required})
 (:SmartContract {address, protocol, verified})
 
@@ -337,89 +350,121 @@ Fraud Detection Engine
 (:Wallet)-[:INTERACTED_WITH]->(:SmartContract)
 ```
 
-### Graph Algorithms Deployed
+### Core Tracing Query
+
+```cypher
+MATCH path = (start:Wallet {address: $suspect})-[:SENT*1..6]->(end:Wallet)
+WHERE end.label = 'EXCHANGE'
+  AND ALL(r IN relationships(path) WHERE r.amount > 0.01)
+RETURN path, length(path) AS hops,
+       [r IN relationships(path) | r.amount] AS amounts
+ORDER BY hops ASC
+LIMIT 10
+```
+
+### Graph Algorithms (Neo4j GDS)
 
 | Algorithm | Use Case |
 |---|---|
-| BFS / DFS | N-hop fund tracing |
-| Shortest Path | Fastest route to exchange |
-| Connected Components | Cluster detection |
-| Degree Analysis | Fan-in / fan-out behavior |
+| BFS / Variable-length paths | N-hop fund tracing |
+| `shortestPath()` | Fastest route to exchange |
 | PageRank | Wallet importance scoring |
-| Community Detection | Organized fraud ring identification |
+| Louvain Community Detection | Fraud ring identification |
+| Degree Analysis | Fan-in / fan-out behavior |
 
 ---
 
 ## 🔎 Fraud Detection Engine
 
-The system uses **4 layered detection**, not a single model:
+4-layer detection — not a single model:
 
 ### Layer 1 — Rule-Based Detection
 
 ```python
 RULES = [
     "interaction_with_known_malicious_wallet",
-    "high_transaction_velocity",          # > N tx/hour
-    "unusual_transaction_volume",
+    "high_transaction_velocity",          # Funds forwarded within minutes
     "large_fan_in",                       # Many senders → one wallet
     "large_fan_out",                      # One wallet → many receivers
+    "peel_chain_pattern",                 # Sent > 90% of received amount
     "rapid_fund_movement",                # < 10 min between receive → send
+    "mixer_interaction",                  # Interacted with Tornado Cash etc.
     "excessive_hops",                     # > 5 intermediate wallets
-    "suspicious_fund_flow_pattern",
-    "interaction_with_known_high_risk_entity",
+    "round_tripping",                     # Funds cycle back to earlier wallet
 ]
 ```
 
 ### Layer 2 — Behavioral Feature Extraction
 
 ```python
-BEHAVIORAL_FEATURES = {
+FEATURES = {
     "transaction_frequency":     "Tx count per hour/day",
-    "transaction_volume":        "Total USD value moved",
+    "transaction_volume":        "Total value moved (ETH)",
     "average_transaction_value": "Mean tx size",
     "wallet_age":                "Days since first tx",
     "in_degree":                 "Number of unique senders",
     "out_degree":                "Number of unique receivers",
-    "unique_counterparties":     "Distinct wallets interacted with",
     "fund_velocity":             "Time between receive → send",
-    "number_of_hops":            "Graph depth from victim",
-    "time_between_transactions": "Average inter-tx delay",
+    "balance_ratio":             "total_sent / total_received",
+    "min_time_between_tx":       "Fastest consecutive tx delay",
+    "unique_counterparties":     "Distinct wallets interacted with",
 }
 ```
 
-### Layer 3 — Machine Learning Models
+### Layer 3 — Machine Learning
 
 | Model | Type | Use Case |
 |---|---|---|
-| **Random Forest** | Supervised | Classification with labeled data |
-| **XGBoost** | Supervised | High-performance gradient boosting |
-| **LightGBM** | Supervised | Fast large-scale training |
-| **Isolation Forest** | Unsupervised | Anomaly detection (no labels needed) |
-| **Logistic Regression** | Supervised | Interpretable baseline |
-
-> **Supervised** when labeled fraud data is available — **Unsupervised/Anomaly** when labels are scarce.
+| **XGBoost** | Supervised | Primary fraud classifier (trained on Elliptic) |
+| **Random Forest** | Supervised | Baseline comparison |
+| **Isolation Forest** | Unsupervised | Anomaly detection when labels unavailable |
 
 ### Layer 4 — Graph Neural Networks *(Advanced)*
 
 ```
 PyTorch Geometric
 ├── GCN  — Graph Convolutional Networks
-├── GAT  — Graph Attention Networks  
+├── GAT  — Graph Attention Networks
 └── GraphSAGE — Inductive node embedding
-
-Tasks:
-├── Node Classification  → Is this wallet malicious?
-├── Edge Classification  → Is this transaction fraudulent?
-└── Graph Embeddings     → Wallet fingerprinting
 ```
 
-> ⚠️ GNN is an **advanced enhancement**. The system is fully functional without it.
+---
+
+## 📊 Risk Scoring System
+
+```
+               ┌──────────────────┐
+               │ Transaction Data │
+               └────────┬─────────┘
+                        ▼
+            ┌───────────────────────┐
+            │   Feature Extraction  │
+            └───────────┬───────────┘
+                        ▼
+      ┌─────────────────┼─────────────────┐
+      ▼                 ▼                 ▼
+ Rule Engine       ML Model         Graph Position
+ (max 40 pts)     (max 40 pts)      (max 20 pts)
+      ▼                 ▼                 ▼
+      └─────────────────┼─────────────────┘
+                        ▼
+                Risk Score Engine
+                        ▼
+                  0 ─────────── 100
+```
+
+| Score Range | Risk Level | Action |
+|---|---|---|
+| 🟢 **0 – 30** | LOW | Monitor |
+| 🟡 **31 – 60** | MEDIUM | Flag for review |
+| 🟠 **61 – 80** | HIGH | Escalate to analyst |
+| 🔴 **81 – 100** | CRITICAL | Immediate alert + auto-report |
 
 ---
 
 ## 🧠 Explainable AI
 
-Every risk score is accompanied by a human-readable explanation:
+Every risk score is accompanied by a human-readable explanation — critical for legal proceedings:
 
 ```
 ┌─────────────────────────────────────────────────┐
@@ -444,67 +489,27 @@ Every risk score is accompanied by a human-readable explanation:
 └─────────────────────────────────────────────────┘
 ```
 
-**Technology:** [SHAP](https://shap.readthedocs.io) + custom rule-narrative generator
-
 ---
 
-## 📊 Risk Scoring System
-
-```
-               ┌──────────────────┐
-               │ Transaction Data │
-               └────────┬─────────┘
-                        ▼
-            ┌───────────────────────┐
-            │   Feature Extraction  │
-            └───────────┬───────────┘
-                        ▼
-      ┌─────────────────┼─────────────────┐
-      ▼                 ▼                 ▼
- Rule Engine       ML Model         Graph Analysis
-      ▼                 ▼                 ▼
-      └─────────────────┼─────────────────┘
-                        ▼
-                Risk Score Engine
-                        ▼
-                  0 ─────────── 100
-```
-
-| Score Range | Risk Level | Action |
-|---|---|---|
-| 🟢 **0 – 30** | LOW | Monitor |
-| 🟡 **31 – 60** | MEDIUM | Flag for review |
-| 🟠 **61 – 80** | HIGH | Escalate to analyst |
-| 🔴 **81 – 100** | CRITICAL | Immediate alert + auto-report |
-
----
-
-## ⚡ Real-Time Processing Pipeline
+## ⚡ Real-Time Pipeline
 
 ```
 New Blockchain Transaction
           ▼
-    Event Listener
-    (WebSocket RPC)
+    Event Listener (Alchemy WebSocket)
           ▼
      Redis Queue
           ▼
  Celery Transaction Processor
           ▼
- Feature Extraction
-          ▼
- Fraud Detection Engine
+ Feature Extraction + Fraud Detection
           ▼
  Risk Score Computation
           ▼
  Alert Generation
           ▼
- WebSocket Push
-          ▼
- Investigator Dashboard 🖥️
+ WebSocket Push → Investigator Dashboard 🖥️
 ```
-
-> **Note:** Apache Kafka is optional. For the SIH prototype, **Redis + Celery + AsyncIO** is sufficient for real-time processing.
 
 ---
 
@@ -514,15 +519,17 @@ New Blockchain Transaction
 
 | Method | Endpoint | Description |
 |---|---|---|
-| `POST` | `/api/investigate` | Submit wallet for investigation |
-| `GET` | `/api/wallet/{address}` | Get wallet details & labels |
-| `GET` | `/api/wallet/{address}/transactions` | Get transaction history |
-| `GET` | `/api/wallet/{address}/graph` | Get fund-flow graph data |
-| `GET` | `/api/wallet/{address}/risk` | Get risk score & explanation |
-| `GET` | `/api/wallet/{address}/alerts` | Get alerts for wallet |
-| `POST` | `/api/report` | Submit victim report |
+| `POST` | `/api/investigate` | Submit a wallet for investigation |
+| `GET` | `/api/wallet/{address}` | Get wallet details & entity labels |
+| `GET` | `/api/wallet/{address}/transactions` | Get full transaction history |
+| `GET` | `/api/wallet/{address}/graph` | Get fund-flow graph (Cytoscape format) |
+| `GET` | `/api/wallet/{address}/risk` | Get risk score + SHAP explanation |
+| `GET` | `/api/wallet/{address}/alerts` | Get alerts for a wallet |
+| `POST` | `/api/report` | Submit a victim report |
 | `GET` | `/api/investigations` | List all investigations |
 | `GET` | `/api/investigations/{id}` | Get investigation details |
+| `GET` | `/api/investigations/{id}/report` | Download PDF report |
+| `GET` | `/api/alerts` | List all triggered alerts |
 | `GET` | `/api/health` | Service health check |
 
 ### WebSocket
@@ -531,42 +538,37 @@ New Blockchain Transaction
 ws://host/ws/investigations/{id}
 ```
 
-Real-time events pushed to the dashboard:
-
 | Event | Description |
 |---|---|
-| `new_transaction` | New on-chain transaction detected |
-| `risk_score_updated` | Risk score recalculated |
+| `status_update` | Investigation progress (INGESTING → TRACING → COMPLETED) |
+| `new_transaction` | Watched wallet moved funds |
+| `risk_score_updated` | Score recalculated |
 | `alert_triggered` | Fraud pattern detected |
-| `graph_updated` | New wallet hop discovered |
-| `exchange_identified` | Fund destination exchange found |
+| `exchange_identified` | Destination exchange found |
 
 ---
 
 ## 🗄️ Database Design
 
-### PostgreSQL Schema
+### Relational (SQLite / PostgreSQL)
 
 ```
 Users ──────────────── Investigations
   │                         │
-  └── Roles (RBAC)          ├── ReportedWallets
-                            ├── Transactions
-                            ├── RiskScores
+  └── Roles (RBAC)          ├── WalletRisk (scores + SHAP reasons)
                             ├── Alerts
-                            └── CaseHistory
+                            └── WalletReports (victim submissions)
 ```
 
-### Neo4j Graph Schema
+### Graph (Neo4j)
 
 ```
-Wallets ──[SENT]──▶ Wallets
-Wallets ──[DEPOSITED_TO]──▶ Exchanges
-Wallets ──[INTERACTED_WITH]──▶ SmartContracts
-Wallets ──[HOLDS]──▶ Tokens
+(:Wallet)-[:SENT {amount, token, tx_hash, timestamp}]->(:Wallet)
+(:Wallet)-[:DEPOSITED_TO]->(:Exchange)
+(:Wallet)-[:INTERACTED_WITH]->(:SmartContract)
 ```
 
-### Redis Usage
+### Cache (Redis)
 
 | Key Pattern | Purpose |
 |---|---|
@@ -574,125 +576,37 @@ Wallets ──[HOLDS]──▶ Tokens
 | `celery:tasks:*` | Background task queue |
 | `ws:room:{investigation_id}` | WebSocket pub/sub channel |
 | `rate:limit:{ip}` | API rate limiting |
-| `tx:pending:{hash}` | Pending tx temporary store |
 
 ---
 
-## 🕵️ Address Intelligence Database
+## 🕵️ Address Intelligence
 
-The system maintains an internal intelligence database:
+Built-in database of known blockchain entities:
 
-```python
-class AddressLabel(BaseModel):
-    address: str
-    entity_type: EntityType     # SCAM | PHISHING | RANSOMWARE |
-                                # EXCHANGE | MIXER | BRIDGE |
-                                # GAMBLING | UNKNOWN
-    risk_level: RiskLevel       # LOW | MEDIUM | HIGH | CRITICAL
-    source: str                 # "I4C" | "CryptoScamDB" | "Manual"
-    confidence: float           # 0.0 – 1.0
-    first_seen: datetime
-    last_seen: datetime
-```
+| Entity Type | Examples |
+|---|---|
+| `EXCHANGE` | Binance, WazirX, Coinbase, Kraken |
+| `MIXER` | Tornado Cash, ChipMixer |
+| `SCAM` | Known phishing / investment scam wallets |
+| `RANSOMWARE` | Identified ransomware collection addresses |
+| `BRIDGE` | Cross-chain bridge contracts |
+| `SANCTIONED` | OFAC-sanctioned wallets |
+
+**Sources:** Etherscan Label Cloud, CryptoScamDB, Bitcoin Abuse DB, OFAC Sanctions List, Manual OSINT
 
 ---
 
 ## 🔐 Security
 
-### Authentication & Authorization
-
-```
-JWT (JSON Web Tokens)
-OAuth 2.0 (where applicable)
-Role-Based Access Control (RBAC)
-```
-
-### RBAC Roles
-
-| Role | Permissions |
+| Feature | Implementation |
 |---|---|
-| `ADMIN` | Full system access, user management |
-| `INVESTIGATOR` | Create/manage cases, view all data |
-| `ANALYST` | Run ML models, view risk reports |
-| `VIEWER` | Read-only access to reports |
-
-### Security Checklist
-
-- [x] HTTPS enforced
-- [x] Passwords hashed (bcrypt)
-- [x] API key authentication
-- [x] Rate limiting (Redis-backed)
-- [x] Input validation (Pydantic)
-- [x] SQL injection protection (SQLAlchemy ORM)
-- [x] CORS configuration
-- [x] Secrets in environment variables (`.env`)
-- [x] Audit logging for all state changes
-- [x] XSS prevention
-
----
-
-## 🧪 Testing
-
-### Backend Testing
-
-```bash
-pytest tests/ -v --cov=app --cov-report=html
-```
-
-### Frontend Testing
-
-```bash
-npm run test          # Vitest
-npm run test:coverage # Coverage report
-```
-
-### API Testing
-
-```bash
-# Swagger UI available at:
-http://localhost:8000/docs
-
-# ReDoc at:
-http://localhost:8000/redoc
-```
-
-### Load Testing *(Optional)*
-
-```bash
-locust -f tests/load/locustfile.py --host=http://localhost:8000
-```
-
----
-
-## 🗺️ Development Roadmap
-
-```
-Phase 1 ✅  Ethereum + Web3.py integration
-     ↓
-Phase 2 ✅  FastAPI backend skeleton
-     ↓
-Phase 3 🔄  PostgreSQL schema & migrations
-     ↓
-Phase 4 🔄  Transaction ingestion pipeline
-     ↓
-Phase 5 ⬜  Neo4j graph construction
-     ↓
-Phase 6 ⬜  BFS-based fund tracing
-     ↓
-Phase 7 ⬜  Rule-based risk scoring
-     ↓
-Phase 8 ⬜  React investigator dashboard
-     ↓
-Phase 9 ⬜  Real-time WebSocket monitoring
-     ↓
-Phase 10 ⬜  ML anomaly detection
-     ↓
-Phase 11 ⬜  Explainable AI (SHAP)
-     ↓
-Phase 12 ⬜  Graph Neural Networks (GNN)
-```
-
-> **The MVP works without ML/GNN.** ML components enhance an already-functional investigation pipeline — they are not the foundation.
+| Authentication | JWT tokens |
+| Authorization | Role-Based Access Control (RBAC) |
+| Roles | `ADMIN`, `INVESTIGATOR`, `ANALYST`, `VIEWER` |
+| Password storage | bcrypt hashing |
+| API protection | Rate limiting (Redis), input validation (Pydantic) |
+| Data security | HTTPS, CORS, SQL injection protection (ORM), audit logging |
+| Secrets | Environment variables (`.env`) |
 
 ---
 
@@ -701,45 +615,34 @@ Phase 12 ⬜  Graph Neural Networks (GNN)
 ### Prerequisites
 
 ```bash
-# Required
 Python 3.12+
-Node.js 20+
 Docker & Docker Compose
-PostgreSQL 16
-Neo4j 5
-Redis 7
-
-# Blockchain API Key (any one)
-Alchemy / Infura / QuickNode API Key
+Alchemy or Etherscan API Key
 ```
 
-### Local Development Setup
+### Quick Start
 
 ```bash
-# 1. Clone the repository
+# 1. Clone
 git clone https://github.com/blockies/chaintrace.git
 cd chaintrace
 
-# 2. Backend setup
+# 2. Start infrastructure
+docker-compose up -d
+
+# 3. Backend setup
 cd backend
-python -m venv venv
-source venv/bin/activate          # Windows: venv\Scripts\activate
+python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
+cp .env.example .env    # Add your API keys
 
-# 3. Configure environment
-cp .env.example .env
-# Edit .env with your API keys and DB credentials
+# 4. Run
+uvicorn api.main:app --reload --port 8000
 
-# 4. Run database migrations
-alembic upgrade head
-
-# 5. Start backend
-uvicorn app.main:app --reload --port 8000
-
-# 6. Frontend setup (new terminal)
-cd ../frontend
-npm install
-npm run dev
+# 5. Open
+# API Docs:  http://localhost:8000/docs
+# Neo4j:     http://localhost:7474
+# Dashboard: http://localhost:3000
 ```
 
 ### Environment Variables
@@ -750,7 +653,7 @@ ALCHEMY_API_KEY=your_alchemy_key
 ETHERSCAN_API_KEY=your_etherscan_key
 
 # Databases
-DATABASE_URL=postgresql://user:password@localhost:5432/chaintrace
+DATABASE_URL=sqlite:///./chaintrace.db
 NEO4J_URI=bolt://localhost:7687
 NEO4J_USER=neo4j
 NEO4J_PASSWORD=your_neo4j_password
@@ -758,12 +661,6 @@ REDIS_URL=redis://localhost:6379
 
 # Security
 SECRET_KEY=your_super_secret_key
-ALGORITHM=HS256
-ACCESS_TOKEN_EXPIRE_MINUTES=30
-
-# App
-ENVIRONMENT=development
-DEBUG=true
 ```
 
 ---
@@ -771,62 +668,48 @@ DEBUG=true
 ## 🐳 Docker Deployment
 
 ```bash
-# Start all services
 docker-compose up -d
 
-# Services started:
-# ├── frontend     → http://localhost:3000
-# ├── backend      → http://localhost:8000
-# ├── postgres     → localhost:5432
-# ├── neo4j        → http://localhost:7474
-# ├── redis        → localhost:6379
-# └── ml-service   → http://localhost:8001
-```
-
-### `docker-compose.yml` Services
-
-```yaml
-services:
-  frontend:    # React + Vite
-  backend:     # FastAPI + Uvicorn
-  postgres:    # PostgreSQL 16
-  neo4j:       # Neo4j 5
-  redis:       # Redis 7
-  ml-service:  # Python ML microservice
-  celery:      # Background task worker
+# Services:
+# ├── backend       → http://localhost:8000
+# ├── frontend      → http://localhost:3000
+# ├── neo4j         → http://localhost:7474
+# ├── redis         → localhost:6379
+# ├── celery        → Background worker
+# └── flower        → http://localhost:5555 (task monitoring)
 ```
 
 ---
 
-## 🤝 Contributing
+## 🔮 Future Scope
 
-```bash
-# 1. Create a feature branch
-git checkout -b feature/your-feature-name
+| Enhancement | Description |
+|---|---|
+| 🌐 Multi-chain support | Bitcoin, Tron (USDT-TRC20), Solana |
+| 🧬 Graph Neural Networks | GCN/GAT for advanced pattern detection |
+| 🤝 I4C Integration | Direct API integration with NCRP portal |
+| 📱 Mobile app | Field investigator mobile interface |
+| 🔄 Cross-chain tracing | Track funds across bridge protocols |
+| 📡 Mempool monitoring | Detect fraud before transactions confirm |
 
-# 2. Make your changes
+---
 
-# 3. Run tests
-pytest && npm run test
+## 🧱 Team Blockies
 
-# 4. Commit
-git commit -m "feat: your feature description"
+<div align="center">
 
-# 5. Push and open PR
-git push origin feature/your-feature-name
-```
+| Member | Role |
+|--------|------|
+| [Add member] | Blockchain Engineer |
+| [Add member] | Graph Engineer |
+| [Add member] | ML / AI Engineer |
+| [Add member] | Backend Engineer |
+| [Add member] | Systems Engineer |
+| [Add member] | Intelligence & DevOps |
 
-### Commit Convention
+**Smart India Hackathon 2026** &nbsp;|&nbsp; **Ministry of Home Affairs** &nbsp;|&nbsp; **I4C, CIS Division**
 
-```
-feat:     New feature
-fix:      Bug fix
-docs:     Documentation changes
-style:    Formatting changes
-refactor: Code restructuring
-test:     Adding tests
-chore:    Build/tooling changes
-```
+</div>
 
 ---
 
@@ -840,12 +723,8 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 **Built with ❤️ by Team Blockies 🧱**
 
-*Smart India Hackathon 2026 | Ministry of Home Affairs | I4C, CIS Division*
-
----
+*Tracing fraud, one block at a time. ⛓️*
 
 [![GitHub](https://img.shields.io/badge/GitHub-Team_Blockies-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/blockies)
-
-*Tracing fraud, one block at a time. ⛓️*
 
 </div>
