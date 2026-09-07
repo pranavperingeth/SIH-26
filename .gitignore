@@ -1,0 +1,13 @@
+# Python virtual environments
+.venv/
+venv/
+__pycache__/
+
+# Datasets and model files (do not push to GitHub)
+backend/ml/data/
+*.csv
+*.joblib
+*.pkl
+
+# Secrets and environment variables
+.env
