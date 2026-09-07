@@ -155,7 +155,7 @@ def main():
     print(f"   Wallet nodes:      {stats['total_wallets']}")
     print(f"   Transaction edges: {stats['total_transactions']}")
     print(f"   Labeled wallets:   {stats['labeled_wallets']}")
-    print(f"   Exchanges found:   {stats['exchanges']}")
+    print(f"   Exchanges found:   {stats['exchanges_found']}")
 
     # ─────────────────────────────────────────────
     # Step 6: Query specific wallet data

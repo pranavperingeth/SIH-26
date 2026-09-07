@@ -808,7 +808,7 @@ class GraphBuilder:
         # Cypher Query: Isolated subquery metrics aggregation
         cypher = """
         // Subquery 1: Compute wallet metrics (total nodes, labeled nodes, exchange nodes)
-        CALL {
+        CALL () {
             // Step 1: Match all wallet nodes optionally to support empty database state
             OPTIONAL MATCH (w:Wallet)
             // Step 2: Return aggregated counts using conditional expressions
@@ -817,7 +817,7 @@ class GraphBuilder:
                    count(CASE WHEN toUpper(coalesce(w.entity_type, '')) = 'EXCHANGE' OR toUpper(coalesce(w.label, '')) = 'EXCHANGE' THEN 1 END) AS exchanges_found
         }
         // Subquery 2: Compute total transaction count across all SENT relationships
-        CALL {
+        CALL () {
             // Step 3: Match all SENT relationships optionally
             OPTIONAL MATCH ()-[r:SENT]->()
             // Step 4: Return count of transaction edges
