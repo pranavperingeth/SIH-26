@@ -188,6 +188,8 @@ Built-in database of 10,000+ labeled addresses — exchanges, mixers, scam walle
 | `web3.py` | EVM blockchain interaction |
 | `ABI decoding` | Smart contract event parsing |
 | `JSON-RPC` | Direct node communication |
+| [Orbit](https://github.com/s0md3v/Orbit) | Open-source recursive wallet crawler — reference for ingestion layer |
+| [BlockTracker](https://github.com/thisiskeanyvy/blocktracker) | Open-source transaction tree builder — reference for BFS tracer & probability scoring |
 
 ### 🗄️ Databases
 
@@ -694,18 +696,31 @@ docker-compose up -d
 
 ---
 
+## 📖 Open Source References
+
+ChainTrace builds on ideas from the following open-source tools:
+
+| Project | Author | What we learned / adapted |
+|---------|--------|---------------------------|
+| [**Orbit**](https://github.com/s0md3v/Orbit) | s0md3v | Recursive wallet crawling strategy — adapted into `ingestion/recursive_fetch.py` for multi-hop transaction ingestion |
+| [**BlockTracker**](https://github.com/thisiskeanyvy/blocktracker) | thisiskeanyvy | Transaction tree-climbing algorithm + probability scoring on traced paths — adapted into `graph/tracer.py` for bidirectional fund tracing |
+
+> Both tools are MIT/open-source licensed. We use their **algorithmic concepts** as a reference, not their code directly. Our implementation is purpose-built for Neo4j, Etherscan, and the SIH investigation pipeline.
+
+---
+
 ## 🧱 Team Blockies
 
 <div align="center">
 
 | Member | Role |
 |--------|------|
-| [Add member] | Blockchain Engineer |
-| [Add member] | Graph Engineer |
-| [Add member] | ML / AI Engineer |
-| [Add member] | Backend Engineer |
-| [Add member] | Systems Engineer |
-| [Add member] | Intelligence & DevOps |
+| **Hanin** | Blockchain Ingestion (Web3.py, Etherscan, Orbit) |
+| **Pranav** | Graph Engine (Neo4j, BFS Tracer, BlockTracker) |
+| **James** | ML / AI (XGBoost, SHAP, Elliptic) + PPT |
+| **Neeraj** | Backend API (FastAPI, SQLAlchemy) |
+| **Super** | Rule Engine & Address Intelligence |
+| **Savio** | Infrastructure (Docker, Redis, Celery) |
 
 **Smart India Hackathon 2026** &nbsp;|&nbsp; **Ministry of Home Affairs** &nbsp;|&nbsp; **I4C, CIS Division**
 
