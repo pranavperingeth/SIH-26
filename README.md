@@ -719,7 +719,7 @@ ChainTrace builds on ideas from the following open-source tools:
 | **Pranav** | Graph Engine (Neo4j, BFS Tracer, BlockTracker) |
 | **James** | ML / AI (XGBoost, SHAP, Elliptic) + PPT |
 | **Neeraj** | Backend API (FastAPI, SQLAlchemy) |
-| **Super** | Rule Engine & Address Intelligence |
+| **Souparnika** | Rule Engine & Address Intelligence |
 | **Savio** | Infrastructure (Docker, Redis, Celery) |
 
 **Smart India Hackathon 2026** &nbsp;|&nbsp; **Ministry of Home Affairs** &nbsp;|&nbsp; **I4C, CIS Division**
