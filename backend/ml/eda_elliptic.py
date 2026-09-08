@@ -1,7 +1,10 @@
 import sys
 import numpy as np
 import pandas as pd
-from dataset import load_elliptic_dataset
+try:
+    from backend.ml.dataset import load_elliptic_dataset
+except ModuleNotFoundError:
+    from dataset import load_elliptic_dataset
 
 def run_eda(data_dir: str):
     print("[-] Loading Elliptic dataset...")
