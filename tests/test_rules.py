@@ -28,12 +28,7 @@ from risk_scorer import compute_risk_score
 
 @pytest.fixture(scope="module")
 def address_db():
-    from address_db import AddressLabel
-    return {
-        "0xscam": AddressLabel("0xscam", "Bad Actor", "SCAM", "Test", "CRITICAL"),
-        "0xmixer": AddressLabel("0xmixer", "Mixer", "MIXER", "Test", "CRITICAL"),
-        "0xexchange": AddressLabel("0xexchange", "Binance", "EXCHANGE", "Test", "LOW"),
-    }
+    return load_intelligence_db()
 
 
 def make_tx(from_addr, to_addr, ts, value=1.0, tx_hash="0xabc"):
