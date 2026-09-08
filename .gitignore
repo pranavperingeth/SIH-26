@@ -5,7 +5,7 @@ __pycache__/
 
 # Datasets and model files (do not push to GitHub)
 backend/ml/data/
-*.csv
+
 *.joblib
 *.pkl
 
