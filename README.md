@@ -21,7 +21,7 @@
 
 [![Redis](https://img.shields.io/badge/Redis-7-DC382D?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io)
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://docker.com)
-[![XGBoost](https://img.shields.io/badge/XGBoost-ML-189BCC?style=for-the-badge)](https://xgboost.readthedocs.io)
+[![Neo4j GDS](https://img.shields.io/badge/Neo4j_GDS-GNN-008CC1?style=for-the-badge)](https://neo4j.com/docs/graph-data-science/current/)
 [![SHAP](https://img.shields.io/badge/SHAP-Explainable_AI-FF6B6B?style=for-the-badge)](https://shap.readthedocs.io)
 
 <br/>
@@ -90,7 +90,7 @@ Victim reports wallet  →  ChainTrace traces the money  →  Police freezes the
 | Capability | Description |
 |---|---|
 | 🕸️ **Automated Fund Tracing** | BFS graph traversal traces money through up to 6 hops automatically |
-| 🧠 **AI-Powered Detection** | XGBoost model trained on 203K labeled transactions detects laundering patterns |
+| 🧠 **AI-Powered Detection** | Graph Neural Network (via Neo4j GDS) detecting topological laundering patterns |
 | 📐 **Rule Engine** | Catches peel chains, fan-in/fan-out, velocity anomalies, and mixer interactions |
 | 🏦 **Exchange Identification** | Automatically identifies the destination exchange (Binance, WazirX, etc.) |
 | 💯 **Risk Scoring (0–100)** | Unified score combining ML + Rules + Graph position |
@@ -203,7 +203,7 @@ Built-in database of 10,000+ labeled addresses — exchanges, mixers, scam walle
 
 | Library | Purpose | Badge |
 |---|---|---|
-| XGBoost | Primary fraud classifier | ![XGBoost](https://img.shields.io/badge/XGBoost-189BCC?style=flat-square) |
+| Neo4j GDS | Graph Neural Networks (GNN) | ![Neo4j GDS](https://img.shields.io/badge/Neo4j_GDS-008CC1?style=flat-square) |
 | scikit-learn | ML toolkit (Random Forest, Isolation Forest) | ![sklearn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white) |
 | SHAP | Explainable AI — human-readable risk explanations | ![SHAP](https://img.shields.io/badge/SHAP-FF6B6B?style=flat-square) |
 | Pandas / NumPy | Data processing & feature extraction | ![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat-square&logo=pandas&logoColor=white) |
@@ -272,7 +272,7 @@ Built-in database of 10,000+ labeled addresses — exchanges, mixers, scam walle
                     ▼                           ▼
             ┌─────────────┐             ┌─────────────┐
             │ Rule Engine │             │  ML Models  │
-            │ (Heuristic) │             │ XGBoost/IF  │
+            │ (Heuristic) │             │ Neo4j GDS   │
             └──────┬──────┘             └──────┬──────┘
                    │                           │
                    └─────────────┬─────────────┘
@@ -415,10 +415,9 @@ FEATURES = {
 
 ### Layer 3 — Machine Learning
 
-| Model | Type | Use Case |
+| Model | Type | Purpose |
 |---|---|---|
-| **XGBoost** | Supervised | Primary fraud classifier (trained on Elliptic) |
-| **Random Forest** | Supervised | Baseline comparison |
+| **Neo4j GDS** | GNN | Native Graph Neural Network classifying fraudulent typologies |
 | **Isolation Forest** | Unsupervised | Anomaly detection when labels unavailable |
 
 ### Layer 4 — Graph Neural Networks *(Advanced)*
@@ -717,7 +716,7 @@ ChainTrace builds on ideas from the following open-source tools:
 |--------|------|
 | **Hanin** | Blockchain Ingestion (Web3.py, Etherscan, Orbit) |
 | **Pranav** | Graph Engine (Neo4j, BFS Tracer, BlockTracker) |
-| **James** | ML / AI (XGBoost, SHAP, Elliptic) + PPT |
+| **James** | ML / AI (GNNs, Neo4j GDS, Elliptic) + PPT |
 | **Neeraj** | Backend API (FastAPI, SQLAlchemy) |
 | **Souparnika** | Rule Engine & Address Intelligence |
 | **Savio** | Infrastructure (Docker, Redis, Celery) |
